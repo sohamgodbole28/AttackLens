@@ -147,7 +147,7 @@ It is intended to assist with authorized security assessments, learning, and pen
 
 ## License
 
-MIT License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
