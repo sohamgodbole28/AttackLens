@@ -8,7 +8,7 @@
 
 Analyze HTTP requests, identify potential vulnerability classes, and receive actionable penetration testing guidance through an interactive security analysis engine.
 
-[Live Demo](https://attack-lens.vercel.app) • [Documentation](#features) • [Report Issues](https://github.com/sohamgodbole28/AttackLens/issues)
+[Live Demo](https://attack-lens.vercel.app) • [Documentation](#core-capabilities) • [Report Issues](https://github.com/sohamgodbole28/AttackLens/issues)
 
 ---
 
@@ -22,154 +22,76 @@ Rather than attempting to exploit applications automatically, AttackLens analyze
 
 It acts as an intelligent assistant that bridges the gap between raw HTTP traffic and manual security testing.
 
----
+### Highlights
 
-## Features
-
-- HTTP Request Analysis
-- Structured JSON Request Analysis
-- Rule-Based Vulnerability Detection
-- YAML-Driven Knowledge Base
-- Interactive Request Highlighting
-- Expandable Detection Evidence
-- Weighted Rule Engine
-- Actionable Testing Checklists
-- Curated Security References
-- Modern Responsive Interface
-- Production-Ready FastAPI Backend
-- React + Vite Frontend
+- Rule-based security analysis engine
+- Extensible YAML knowledge base
+- Interactive request visualization
+- Weighted vulnerability scoring
+- Actionable penetration testing guidance
+- Fully deployed React + FastAPI application
 
 ---
 
-## Supported Detection Categories
+## Core Capabilities
 
-Current detection capabilities include:
+- Analyze Raw HTTP and Structured JSON requests
+- Detect security-relevant request characteristics
+- Evaluate requests using a weighted rule engine
+- Generate actionable penetration testing guidance
+- Provide contextual testing checklists and security references
+- Highlight evidence directly within analyzed requests
+- Modular YAML-driven knowledge base for extensible detection logic
+- Modern React + FastAPI architecture
 
-- Broken Access Control (BAC)
-- Insecure Direct Object Reference (IDOR)
-- File Upload Testing
-- Authentication Indicators
-- Object Identifier Detection
-- Privileged Endpoint Detection
-- Role Parameter Detection
-- Multipart Request Detection
+---
 
-AttackLens is designed with a modular knowledge base, making it straightforward to extend with additional vulnerability classes in future releases.
+## Knowledge-Driven Detection
+
+AttackLens uses a modular YAML knowledge base that evolves independently of the engine, allowing new indicators, rules, checklists and references to be added without changing the core architecture.
 
 ---
 
 ## Architecture
 
-```
-                HTTP Request / JSON
-                         │
-                         ▼
-                  Request Parser
-                         │
-                         ▼
-               Indicator Detection Engine
-                         │
-                         ▼
-                 Weighted Rule Engine
-                         │
-            ┌────────────┴────────────┐
-            ▼                         ▼
-     Recommendations            Risk Scoring
-            │                         │
-            └────────────┬────────────┘
-                         ▼
-              Checklist & References
-                         │
-                         ▼
-                  Interactive Frontend
+```text
+HTTP Request / JSON
+       ↓
+Request Parser
+       ↓
+Indicator Detection
+       ↓
+Rule Evaluation
+       ↓
+Risk Scoring
+       ↓
+Recommendations
+       ↓
+Checklists & References
 ```
 
 ---
 
 ## Technology Stack
 
-### Backend
-
-- FastAPI
-- Pydantic
-- PyYAML
-- Uvicorn
-
-### Frontend
-
-- React
-- Vite
-- TypeScript
-- Framer Motion
-
-### Knowledge Engine
-
-- YAML-based Rules
-- Indicators
-- Checklists
-- References
+| Backend | Frontend | Knowledge Engine |
+| --- | --- | --- |
+| FastAPI | React | YAML-based Rules |
+| Pydantic | Vite | Indicators |
+| PyYAML | TypeScript | Checklists |
+| Uvicorn | Framer Motion | References |
 
 ---
 
 ## Project Structure
 
-```
+```text
 AttackLens/
-
 ├── backend/
-│   ├── app/
-│   ├── knowledge/
-│   └── requirements.txt
-│
 ├── frontend/
-│
 ├── examples/
-│
-└── docs/
-```
-
----
-
-## Example Workflow
-
-```
-Raw HTTP Request
-
-        │
-
-        ▼
-
-Request Parsing
-
-        │
-
-        ▼
-
-Indicator Detection
-
-        │
-
-        ▼
-
-Rule Evaluation
-
-        │
-
-        ▼
-
-Recommendations
-
-        │
-
-        ▼
-
-Testing Checklist
-
-        │
-
-        ▼
-
-Security References
+├── docs/
+└── README.md
 ```
 
 ---
@@ -207,44 +129,11 @@ npm run dev
 
 ## Why AttackLens?
 
-Most security tools focus on finding vulnerabilities automatically.
+AttackLens does not attempt to automatically exploit vulnerabilities.
 
-AttackLens focuses on helping the tester think.
+Instead, it assists penetration testers by identifying suspicious request characteristics, highlighting relevant evidence, evaluating security rules, and suggesting what to investigate next.
 
-Instead of replacing manual testing, it assists by:
-
-- Highlighting suspicious request characteristics
-- Suggesting relevant vulnerability classes
-- Providing structured testing guidance
-- Reducing repetitive analysis during reconnaissance
-
-AttackLens is intended to accelerate manual security assessments while keeping the tester in control of the decision-making process.
-
----
-
-## Roadmap
-
-### Version 1.0
-
-- Rule Engine
-- YAML Knowledge Base
-- Interactive UI
-- Request Highlighting
-- Checklist Engine
-- References Engine
-- Production Deployment
-
-### Planned
-
-- SQL Injection Knowledge Pack
-- SSRF Detection
-- JWT Analysis
-- XXE Detection
-- SSTI Rules
-- GraphQL Support
-- Exportable Reports
-- Burp Suite Extension
-- CLI Support
+Its goal is to augment manual security testing rather than replace analyst judgment.
 
 ---
 
@@ -264,8 +153,8 @@ MIT License
 
 <div align="center">
 
-Built with ❤️ by Soham Godbole
+Built and maintained by Soham Godbole
 
-If you found AttackLens useful, consider giving the repository a ⭐.
+If AttackLens helped you, consider giving the repository a ⭐.
 
 </div>
