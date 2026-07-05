@@ -17,6 +17,52 @@ const PIPELINE_STAGES = [
   "Done"
 ];
 
+function getErrorDetails(errorString: string) {
+  const lowerError = errorString.toLowerCase();
+  
+  if (lowerError.includes("invalid json")) {
+    return {
+      title: "Invalid JSON",
+      explanation: "The request body provided is not valid JSON.",
+      example: '{\n  "method": "POST",\n  "path": "/api/login",\n  "body": {\n    "username": "admin"\n  }\n}'
+    };
+  }
+  
+  if (lowerError.includes("parse") || lowerError.includes("malformed") || lowerError.includes("invalid http") || lowerError.includes("request line")) {
+    return {
+      title: "Invalid HTTP Request",
+      explanation: "The raw HTTP request could not be parsed. Ensure it has a valid request line (e.g., POST /path HTTP/1.1) and proper headers.",
+      example: "POST /api/login HTTP/1.1\nHost: example.com\nContent-Type: application/json\n\n{\n  \"username\": \"admin\"\n}"
+    };
+  }
+  
+  if (lowerError.includes("offline") || lowerError.includes("network error") || lowerError.includes("failed to fetch") || lowerError.includes("connection refused")) {
+    return {
+      title: "Backend Unavailable",
+      explanation: "Could not connect to the AttackLens analysis engine. Please ensure the backend server is running."
+    };
+  }
+
+  if (lowerError.includes("timeout")) {
+    return {
+      title: "Request Timeout",
+      explanation: "The analysis engine took too long to respond."
+    };
+  }
+  
+  if (lowerError.includes("empty")) {
+    return {
+      title: "Empty Request",
+      explanation: "Please provide an HTTP request to analyze."
+    };
+  }
+
+  return {
+    title: "Internal Server Error",
+    explanation: "An unexpected error occurred during analysis."
+  };
+}
+
 function LivePipeline({ data }: { data: AnalyzeResponse | null }) {
   const [activeStage, setActiveStage] = useState(0);
   const indCount = useMotionValue(0);
@@ -161,21 +207,38 @@ function App() {
         {/* Right Column: Results */}
         <div className="flex flex-col gap-6 relative">
           <AnimatePresence mode="wait">
-            {error && (
-              <motion.div 
-                key="error"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="p-4 border border-destructive/20 bg-destructive/5 text-destructive rounded-xl font-medium text-sm flex gap-3 items-start"
-              >
-                <span className="flex h-5 w-5 rounded-full bg-destructive items-center justify-center text-destructive-foreground text-xs font-black shrink-0 mt-0.5">!</span>
-                <div>
-                  <h3 className="font-semibold mb-1">Analysis Failed</h3>
-                  <p className="opacity-90">{error}</p>
-                </div>
-              </motion.div>
-            )}
+            {error && (() => {
+              const details = getErrorDetails(error);
+              return (
+                <motion.div 
+                  key="error"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="p-5 border border-destructive/30 bg-destructive/5 text-destructive rounded-xl flex gap-4 items-start shadow-sm"
+                >
+                  <span className="flex h-6 w-6 rounded-full bg-destructive/20 items-center justify-center text-destructive text-sm font-black shrink-0 mt-0.5 border border-destructive/40">!</span>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-[15px] mb-1.5 text-destructive">{details.title}</h3>
+                    <p className="text-destructive/90 text-[13px] leading-relaxed mb-4">{details.explanation}</p>
+                    
+                    {details.example && (
+                      <div className="mb-4">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-destructive/70 mb-2">Valid Example</p>
+                        <pre className="bg-destructive/10 p-3 rounded-md text-[12px] font-mono border border-destructive/20 text-destructive/90 overflow-x-auto whitespace-pre-wrap">
+                          {details.example}
+                        </pre>
+                      </div>
+                    )}
+
+                    <div className="pt-3 border-t border-destructive/20 mt-2">
+                      <p className="text-[9px] font-bold uppercase tracking-widest text-destructive/50 mb-1.5">Technical Details</p>
+                      <p className="text-[11px] font-mono text-destructive/70 break-words">{error}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })()}
 
             {loading && (
               <motion.div 
