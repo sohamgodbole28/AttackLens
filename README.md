@@ -1,5 +1,7 @@
 <div align="center">
 
+![AttackLens Banner](./frontend/src/assets/hero.png)
+
 # AttackLens
 
 ### Rule-Based Web Application Security Analysis Engine
