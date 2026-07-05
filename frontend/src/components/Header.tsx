@@ -16,9 +16,11 @@ export function Header() {
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <Button variant="outline" size="sm" className="border border-border/60 hover:bg-accent/50 hover:text-accent-foreground rounded-md transition-colors h-8 px-3 text-xs font-semibold gap-2" onClick={() => window.open('https://github.com', '_blank')}>
-          <GitBranch className="h-3.5 w-3.5" />
-          GitHub
+        <Button asChild variant="outline" size="sm" className="border border-border/60 hover:bg-accent/50 hover:text-accent-foreground rounded-md transition-colors h-8 px-3 text-xs font-semibold gap-2" title="View source code, releases and documentation">
+          <a href="https://github.com/sohamgodbole28/AttackLens" target="_blank" rel="noopener noreferrer">
+            <GitBranch className="h-3.5 w-3.5" />
+            View on GitHub ↗
+          </a>
         </Button>
       </div>
     </header>
