@@ -38,3 +38,12 @@ uvicorn app.main:app --reload
 ```bash
 pytest
 ```
+
+## Production Deployment
+
+When deploying AttackLens to production, you must set the `FRONTEND_URL` environment variable to match the public URL of your deployed frontend application. This ensures that the backend CORS configuration correctly accepts incoming requests from the production application while still allowing local development requests.
+
+Example:
+```bash
+export FRONTEND_URL="https://attacklens-app.vercel.app"
+```

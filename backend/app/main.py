@@ -1,6 +1,7 @@
 """FastAPI application for AttackLens."""
 
 import logging
+import os
 import sys
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -53,9 +54,16 @@ app = FastAPI(
 app.include_router(analyze_router)
 app.include_router(knowledge_router)
 
+origins = ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173"]
+
+# Intended for the production deployment
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    origins.append(frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
