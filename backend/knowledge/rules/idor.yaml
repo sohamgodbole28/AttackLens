@@ -1,0 +1,73 @@
+id: idor
+
+name: IDOR Detection Rule
+
+description: >
+  Scores the likelihood that an endpoint should be tested
+  for Insecure Direct Object Reference (IDOR) based on the
+  indicators extracted from the request and response.
+
+version: 1.0
+
+enabled: true
+
+vulnerability: idor
+
+required_indicators:
+
+  - object_identifier
+
+optional_indicators:
+
+  - authentication
+  - json_response
+
+related_indicators:
+
+  - authorization
+  - api_endpoint
+
+weights:
+
+  object_identifier: 50
+
+  authentication: 25
+
+  json_response: 15
+
+thresholds:
+
+  high: 80
+
+  medium: 60
+
+  low: 40
+
+recommendation:
+
+  show_if_score_at_least: 40
+
+explanation:
+
+  high: >
+    Multiple high-confidence indicators suggest that this endpoint
+    may expose user-controlled object references and should be
+    thoroughly tested for Insecure Direct Object Reference (IDOR).
+
+  medium: >
+    Some indicators associated with IDOR were detected.
+    Manual verification is recommended.
+
+  low: >
+    Limited evidence was found. Consider testing if the endpoint
+    exposes sensitive application objects.
+
+notes:
+
+  - Object identifiers are mandatory for IDOR recommendations.
+
+  - Authentication increases confidence but is not strictly required.
+
+  - JSON responses commonly expose structured application resources.
+
+  - Final confirmation always requires manual testing.

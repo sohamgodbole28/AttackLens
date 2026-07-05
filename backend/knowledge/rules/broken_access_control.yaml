@@ -1,0 +1,82 @@
+id: broken_access_control
+
+name: Broken Access Control Detection Rule
+
+description: >
+  Scores the likelihood that an endpoint should be tested
+  for Broken Access Control based on indicators extracted
+  from the request and endpoint structure.
+
+version: 1.0
+
+enabled: true
+
+vulnerability: broken_access_control
+
+required_indicators:
+
+  - authentication
+
+optional_indicators:
+
+  - privileged_endpoint
+  - role_parameter
+  - object_identifier
+  - json_response
+
+related_indicators:
+
+  - jwt
+  - api_endpoint
+
+weights:
+
+  authentication: 20
+
+  privileged_endpoint: 35
+
+  role_parameter: 25
+
+  object_identifier: 15
+
+  json_response: 10
+
+thresholds:
+
+  high: 70
+
+  medium: 50
+
+  low: 30
+
+recommendation:
+
+  show_if_score_at_least: 30
+
+explanation:
+
+  high: >
+    Multiple authorization-related indicators suggest this endpoint
+    performs privileged operations or accesses protected resources.
+    Perform comprehensive Broken Access Control testing.
+
+  medium: >
+    The endpoint exposes characteristics commonly associated with
+    authorization-sensitive functionality. Manual verification
+    is recommended.
+
+  low: >
+    Limited authorization indicators were detected. Consider
+    testing if the endpoint performs sensitive actions.
+
+notes:
+
+  - Authentication is required because Broken Access Control generally applies to authenticated functionality.
+
+  - Privileged endpoints significantly increase the likelihood of authorization flaws.
+
+  - Role-related parameters often indicate privilege assignment or permission management.
+
+  - Object identifiers may indicate resource-level authorization checks.
+
+  - Final confirmation always requires manual testing.

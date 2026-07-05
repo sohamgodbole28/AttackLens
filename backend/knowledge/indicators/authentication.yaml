@@ -1,0 +1,76 @@
+id: authentication
+
+name: Authentication
+
+description: >
+  Detects indicators that suggest a request is associated with an
+  authenticated user or authenticated session.
+
+version: 1.0
+
+category: authentication
+
+confidence: high
+
+priority: 100
+
+detection:
+
+  headers:
+
+    Authorization:
+      - Bearer
+      - Basic
+      - Digest
+
+    X-API-Key:
+      - "*"
+
+    API-Key:
+      - "*"
+
+    X-Auth-Token:
+      - "*"
+
+  cookies:
+
+    - session
+    - sessionid
+    - phpsessid
+    - jsessionid
+    - connect.sid
+    - auth
+    - token
+    - access_token
+    - refresh_token
+
+  body_keys:
+
+    - token
+    - access_token
+    - refresh_token
+    - jwt
+
+examples:
+
+  headers:
+
+    - "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+
+    - "Authorization: Basic YWRtaW46cGFzc3dvcmQ="
+
+  cookies:
+
+    - "Cookie: sessionid=abc123"
+
+    - "Cookie: connect.sid=xyz456"
+
+  body:
+
+    - '{"access_token":"eyJhbGciOiJIUzI1NiJ9"}'
+
+notes:
+
+  - Authentication detection does not imply successful authorization.
+  - Session cookies, bearer tokens, API keys and authentication headers are treated as authentication indicators.
+  - This indicator should be evaluated before authorization-related rules.

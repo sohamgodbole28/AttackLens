@@ -1,0 +1,89 @@
+id: file_upload
+
+name: Insecure File Upload Detection Rule
+
+description: >
+  Scores the likelihood that an endpoint provides file upload
+  functionality and should be tested for insecure file upload
+  vulnerabilities based on indicators extracted from the request.
+
+version: 1.0
+
+enabled: true
+
+vulnerability: file_upload
+
+required_indicators: []
+
+optional_indicators:
+
+  - multipart_request
+  - file_parameter
+  - filename_parameter
+  - mime_type
+
+related_indicators:
+
+  - authentication
+  - json_response
+
+weights:
+
+  multipart_request: 35
+
+  file_parameter: 30
+
+  filename_parameter: 20
+
+  mime_type: 15
+
+bonus:
+
+  multipart_request:
+
+    file_parameter: 10
+
+  filename_parameter:
+
+    mime_type: 5
+
+thresholds:
+
+  high: 80
+
+  medium: 60
+
+  low: 40
+
+recommendation:
+
+  show_if_score_at_least: 40
+
+explanation:
+
+  high: >
+    Multiple indicators strongly suggest that this endpoint accepts
+    user-supplied files. Perform comprehensive file upload security
+    testing.
+
+  medium: >
+    The endpoint appears to support file upload functionality.
+    Manual verification is recommended.
+
+  low: >
+    Limited evidence of upload functionality was detected.
+    Consider testing if uploads are confirmed during assessment.
+
+notes:
+
+  - File upload functionality may use multipart forms, JSON APIs or direct binary uploads.
+
+  - Multipart requests significantly increase confidence but are not mandatory.
+
+  - File parameters strongly indicate upload functionality.
+
+  - User-controlled filenames should always be validated.
+
+  - Client-supplied MIME types should never be trusted.
+
+  - Final confirmation always requires manual testing.

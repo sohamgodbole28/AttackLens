@@ -1,0 +1,50 @@
+id: filename_parameter
+
+name: Filename Parameter
+
+description: >
+  Detects user-supplied filenames within multipart requests or
+  request bodies. User-controlled filenames are important when
+  evaluating file upload functionality and storage behavior.
+
+version: 1.0
+
+category: request
+
+confidence: high
+
+priority: 90
+
+detection:
+
+  multipart_headers:
+
+    - filename=
+
+  body_keys:
+
+    - filename
+    - file_name
+    - original_filename
+    - original_name
+    - name
+
+examples:
+
+  headers:
+
+    - 'Content-Disposition: form-data; name="file"; filename="image.png"'
+
+    - 'Content-Disposition: form-data; name="upload"; filename="resume.pdf"'
+
+  body:
+
+    - '{"filename":"invoice.pdf"}'
+
+    - '{"original_filename":"avatar.png"}'
+
+notes:
+
+  - Detection only indicates that the client controls the filename.
+  - Filenames should never be trusted by the server.
+  - Uploaded filenames should be validated and safely generated on the server.

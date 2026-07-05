@@ -1,0 +1,41 @@
+id: json_response
+
+name: JSON Response
+
+description: >
+  Detects endpoints that return structured JSON responses. JSON-based
+  APIs commonly expose objects, resources, and metadata that are
+  relevant during authorization and business logic testing.
+
+version: 1.0
+
+category: response
+
+confidence: high
+
+priority: 90
+
+detection:
+
+  content_types:
+    - application/json
+    - application/problem+json
+    - application/vnd.api+json
+
+  response_headers:
+    - Content-Type
+
+examples:
+
+  headers:
+    - "Content-Type: application/json"
+    - "Content-Type: application/problem+json"
+
+  body:
+    - '{"id":15,"email":"user@example.com"}'
+    - '{"success":true,"data":{"user_id":25}}'
+
+notes:
+  - Detection of a JSON response does not imply an API vulnerability.
+  - JSON responses often expose structured objects suitable for authorization testing.
+  - This indicator is commonly used alongside authentication and object identifier indicators.

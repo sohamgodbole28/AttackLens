@@ -1,0 +1,106 @@
+id: mime_type
+
+name: MIME Type
+
+description: >
+  Detects MIME types declared by the client during file uploads.
+  MIME types provide useful context for identifying upload functionality
+  and determining appropriate security tests.
+
+version: 1.0
+
+category: request
+
+confidence: high
+
+priority: 90
+
+detection:
+
+  images:
+
+    - image/jpeg
+    - image/png
+    - image/gif
+    - image/webp
+    - image/svg+xml
+    - image/bmp
+    - image/tiff
+    - image/x-icon
+
+  documents:
+
+    - application/pdf
+    - text/plain
+    - text/csv
+    - application/rtf
+    - application/msword
+    - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+    - application/vnd.ms-excel
+    - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    - application/vnd.ms-powerpoint
+    - application/vnd.openxmlformats-officedocument.presentationml.presentation
+
+  archives:
+
+    - application/zip
+    - application/x-zip-compressed
+    - application/x-rar-compressed
+    - application/x-7z-compressed
+    - application/gzip
+    - application/x-tar
+
+  scripts:
+
+    - application/javascript
+    - text/javascript
+    - application/x-httpd-php
+    - text/x-php
+    - application/x-python
+    - text/x-python
+    - application/x-sh
+    - text/x-shellscript
+
+  executables:
+
+    - application/x-msdownload
+    - application/x-dosexec
+    - application/vnd.microsoft.portable-executable
+    - application/octet-stream
+
+  audio:
+
+    - audio/mpeg
+    - audio/wav
+    - audio/ogg
+    - audio/flac
+
+  video:
+
+    - video/mp4
+    - video/webm
+    - video/x-msvideo
+    - video/quicktime
+
+  fonts:
+
+    - font/ttf
+    - font/otf
+    - font/woff
+    - font/woff2
+
+examples:
+
+  headers:
+
+    - "Content-Type: image/png"
+    - "Content-Type: application/pdf"
+    - "Content-Type: application/zip"
+    - "Content-Type: application/x-httpd-php"
+
+notes:
+
+  - Client-supplied MIME types should never be trusted.
+  - MIME validation should always be performed on the server.
+  - MIME type alone is insufficient to determine a file's true content.
+  - File extension, MIME type and file signature should all be validated.

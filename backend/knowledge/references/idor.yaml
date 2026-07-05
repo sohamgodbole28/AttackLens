@@ -1,0 +1,51 @@
+vulnerability: idor
+
+version: 1.0
+
+resources:
+
+  learning:
+
+    - source: PortSwigger Web Security Academy
+      title: Insecure Direct Object References (IDOR)
+      type: lab
+
+    - source: OWASP Web Security Testing Guide
+      title: Testing for Authorization (WSTG-ATHZ)
+      type: testing_guide
+
+  standards:
+
+    - source: OWASP Top 10
+      title: A01:2021 - Broken Access Control
+      type: standard
+
+    - source: CWE
+      title: CWE-639 - Authorization Bypass Through User-Controlled Key
+      type: weakness
+
+  books:
+
+    - source: The Web Application Hacker's Handbook
+      title: Access Control Vulnerabilities
+      authors:
+        - Dafydd Stuttard
+        - Marcus Pinto
+
+    - source: Real-World Bug Hunting
+      title: Access Control & IDOR
+      authors:
+        - Peter Yaworski
+
+  methodology:
+
+    - source: OWASP ASVS
+      title: V4 - Access Control Verification Requirements
+
+notes:
+
+  - IDOR is categorized under Broken Access Control in the OWASP Top 10.
+
+  - Always verify object ownership on the server side.
+
+  - Never rely solely on hidden parameters or client-side controls for authorization.

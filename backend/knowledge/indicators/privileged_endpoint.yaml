@@ -1,0 +1,74 @@
+id: privileged_endpoint
+
+name: Privileged Endpoint
+
+description: >
+  Detects endpoints that typically expose privileged functionality
+  such as administration, user management, permission management,
+  system configuration, or sensitive business operations.
+
+version: 1.0
+
+category: endpoint
+
+confidence: high
+
+priority: 90
+
+detection:
+
+  path_segments:
+
+    - admin
+    - administrator
+    - manage
+    - management
+    - config
+    - configuration
+    - settings
+    - permission
+    - permissions
+    - role
+    - roles
+    - users
+    - moderators
+    - moderation
+    - staff
+    - control-panel
+    - controlpanel
+    - superadmin
+    - root
+
+  endpoint_keywords:
+
+    - create
+    - delete
+    - update
+    - modify
+    - assign
+    - revoke
+    - promote
+    - demote
+    - approve
+    - reject
+    - disable
+    - enable
+    - suspend
+    - unsuspend
+    - invite
+
+examples:
+
+  urls:
+
+    - "/admin/users"
+    - "/admin/settings"
+    - "/roles/assign"
+    - "/users/delete"
+    - "/permissions/update"
+
+notes:
+
+  - Detection does not imply a vulnerability.
+  - Administrative endpoints should always enforce server-side authorization.
+  - Sensitive operations must be validated regardless of client-side restrictions.

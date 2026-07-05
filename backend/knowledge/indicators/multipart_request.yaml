@@ -1,0 +1,36 @@
+id: multipart_request
+
+name: Multipart Request
+
+description: >
+  Detects HTTP requests using multipart/form-data, commonly used
+  for file uploads, form submissions with attachments and
+  multi-part content.
+
+version: 1.0
+
+category: request
+
+confidence: high
+
+priority: 95
+
+detection:
+
+  content_types:
+
+    - multipart/form-data
+
+examples:
+
+  headers:
+
+    - "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary"
+
+notes:
+
+  - Multipart requests commonly indicate file upload functionality.
+
+  - Multipart encoding alone does not imply a vulnerability.
+
+  - Additional indicators should be evaluated before recommending file upload testing.

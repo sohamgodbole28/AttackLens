@@ -1,0 +1,78 @@
+id: broken_access_control
+
+name: Broken Access Control
+
+description: >
+  Broken Access Control occurs when an application fails to properly
+  enforce restrictions on what authenticated or unauthenticated users
+  are permitted to access or perform. This allows attackers to bypass
+  authorization mechanisms and perform actions beyond their intended
+  privileges.
+
+version: 1.0
+
+category: access_control
+
+severity: critical
+
+confidence: high
+
+owasp:
+
+  top10:
+    - A01:2021 Broken Access Control
+
+  wstg:
+    - WSTG-ATHZ
+
+cwe:
+
+  - CWE-284
+
+cvss:
+
+  base_score: 8.8
+
+tags:
+
+  - authorization
+  - access_control
+  - privilege_escalation
+  - business_logic
+  - permissions
+  - idor
+
+affected_assets:
+
+  - Administrative Panels
+  - REST APIs
+  - GraphQL APIs
+  - User Management
+  - Account Management
+  - Role Management
+  - Permission Management
+  - Sensitive Business Functions
+
+impact:
+
+  - Unauthorized functionality access
+  - Unauthorized data disclosure
+  - Unauthorized data modification
+  - Unauthorized object deletion
+  - Horizontal privilege escalation
+  - Vertical privilege escalation
+  - Administrative access
+
+prerequisites:
+
+  - Missing or improperly implemented authorization checks
+
+notes:
+
+  - Broken Access Control is the most critical risk in the OWASP Top 10 2021.
+
+  - IDOR is a common manifestation of Broken Access Control.
+
+  - Authorization decisions must always be enforced on the server.
+
+  - Client-side restrictions should never be trusted.

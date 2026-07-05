@@ -1,0 +1,89 @@
+id: object_identifier
+
+name: Object Identifier
+
+description: >
+  Detects user-controlled identifiers that reference application
+  resources or domain objects such as users, accounts, orders,
+  invoices, documents, files, and profiles.
+
+version: 1.0
+
+category: resource_identifier
+
+confidence: high
+
+priority: 100
+
+detection:
+
+  parameters:
+    - id
+    - uid
+    - user_id
+    - userid
+    - account_id
+    - profile_id
+    - order_id
+    - invoice_id
+    - document_id
+    - file_id
+    - owner_id
+    - customer_id
+
+  path_segments:
+    - user
+    - users
+    - account
+    - accounts
+    - profile
+    - profiles
+    - order
+    - orders
+    - invoice
+    - invoices
+    - document
+    - documents
+    - file
+    - files
+    - customer
+    - customers
+
+  body_keys:
+    - id
+    - uid
+    - user_id
+    - userid
+    - account_id
+    - profile_id
+    - order_id
+    - invoice_id
+    - owner_id
+    - customer_id
+
+  value_patterns:
+
+    numeric:
+      - "^[0-9]+$"
+
+    uuid:
+      - "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+
+    mongodb_objectid:
+      - "^[a-f0-9]{24}$"
+
+examples:
+
+  urls:
+    - "/profile?id=5"
+    - "/users/25"
+    - "/orders/1001"
+
+  body:
+    - '{"user_id":15}'
+    - '{"owner_id":"6489ab8c2f3d4a5b6c7d8e9f"}'
+
+notes:
+  - Detection of this indicator does not imply a vulnerability.
+  - This indicator only identifies user-controlled object references.
+  - Authorization checks must be evaluated separately.

@@ -1,0 +1,57 @@
+id: role_parameter
+
+name: Role Parameter
+
+description: >
+  Detects request parameters or body fields that define or modify
+  user roles, permissions, privilege levels or administrative status.
+
+version: 1.0
+
+category: authorization
+
+confidence: high
+
+priority: 95
+
+detection:
+
+  parameters:
+
+    - role
+    - role_id
+    - permission
+    - permission_id
+    - access_level
+    - privilege
+    - is_admin
+    - admin
+    - user_role
+    - group
+
+  body_keys:
+
+    - role
+    - role_id
+    - permission
+    - permissions
+    - access_level
+    - privilege
+    - is_admin
+    - admin
+    - group
+
+examples:
+
+  urls:
+    - "/users?role=admin"
+
+  body:
+    - '{"role":"admin"}'
+    - '{"is_admin":true}'
+    - '{"access_level":"administrator"}'
+
+notes:
+
+  - Client-supplied role information should never be trusted.
+  - Role-related parameters often require strict server-side authorization.

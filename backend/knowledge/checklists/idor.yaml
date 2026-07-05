@@ -1,0 +1,235 @@
+vulnerability: idor
+
+version: 1.0
+
+categories:
+
+  - name: Identifier Manipulation
+
+    tests:
+
+      - id: idor_001
+        priority: critical
+        title: Replace the object identifier
+        objective: Modify the object identifier to reference another user's resource.
+        expected: Access should be denied or limited to authorized resources.
+
+      - id: idor_002
+        priority: critical
+        title: Test sequential identifiers
+        objective: Increment and decrement numeric identifiers.
+        expected: Sequential objects should not be accessible.
+
+      - id: idor_003
+        priority: high
+        title: Test random identifiers
+        objective: Use valid identifiers belonging to unrelated objects.
+        expected: Unauthorized objects must never be returned.
+
+      - id: idor_004
+        priority: high
+        title: Test UUID substitution
+        objective: Replace UUIDs with valid UUIDs obtained from another account.
+        expected: Authorization should still be enforced.
+
+      - id: idor_005
+        priority: medium
+        title: Remove the identifier
+        objective: Omit the identifier completely.
+        expected: The request should fail safely or default only to the current user's resource.
+
+      - id: idor_006
+        priority: medium
+        title: Test duplicate identifier parameters
+        objective: Send multiple values for the same parameter.
+        expected: Authorization checks should remain consistent.
+
+      - id: idor_007
+        priority: medium
+        title: Test encoded identifiers
+        objective: URL encode or double encode object identifiers.
+        expected: Encoding should not bypass authorization.
+
+  - name: Authorization Validation
+
+    tests:
+
+      - id: idor_008
+        priority: critical
+        title: Replay the request using another authenticated account
+        objective: Access the same resource from a second user account.
+        expected: Access should be denied.
+
+      - id: idor_009
+        priority: critical
+        title: Test horizontal privilege escalation
+        objective: Attempt to access another user's objects with equal privileges.
+        expected: Only owned resources should be accessible.
+
+      - id: idor_010
+        priority: critical
+        title: Test vertical privilege escalation
+        objective: Attempt to access administrator-owned resources.
+        expected: Administrative resources must remain inaccessible.
+
+      - id: idor_011
+        priority: high
+        title: Remove authentication
+        objective: Replay the request without authentication.
+        expected: The request should be rejected.
+
+      - id: idor_012
+        priority: high
+        title: Downgrade privileges
+        objective: Replay privileged requests using a lower-privileged account.
+        expected: Sensitive actions should be denied.
+
+      - id: idor_013
+        priority: medium
+        title: Test expired sessions
+        objective: Replay the request with expired authentication.
+        expected: Expired sessions must not access resources.
+
+  - name: Request Manipulation
+
+    tests:
+
+      - id: idor_014
+        priority: high
+        title: Modify identifiers in the request body
+        objective: Change identifiers inside JSON or form data.
+        expected: Authorization must still be enforced.
+
+      - id: idor_015
+        priority: high
+        title: Modify nested object identifiers
+        objective: Change identifiers inside nested objects or arrays.
+        expected: Nested resources must be independently authorized.
+
+      - id: idor_016
+        priority: high
+        title: Modify identifiers in query parameters
+        objective: Change identifiers supplied through URL parameters.
+        expected: Unauthorized resources must not be returned.
+
+      - id: idor_017
+        priority: medium
+        title: Modify path parameters
+        objective: Replace resource identifiers embedded in REST paths.
+        expected: Authorization should remain consistent.
+
+      - id: idor_018
+        priority: medium
+        title: Test alternative HTTP methods
+        objective: Replay the request using supported methods such as GET, POST, PUT, PATCH and DELETE.
+        expected: Authorization must not depend on the HTTP method.
+
+  - name: API & Resource Testing
+
+    tests:
+
+      - id: idor_019
+        priority: critical
+        title: Inspect hidden identifiers
+        objective: Identify object references present in API responses but not visible in the UI.
+        expected: Hidden identifiers should still be protected.
+
+      - id: idor_020
+        priority: high
+        title: Test bulk operations
+        objective: Modify identifiers within batch requests.
+        expected: Every referenced object should be individually authorized.
+
+      - id: idor_021
+        priority: high
+        title: Test file download identifiers
+        objective: Modify identifiers used to retrieve files or documents.
+        expected: Unauthorized files must not be accessible.
+
+      - id: idor_022
+        priority: high
+        title: Test file upload ownership
+        objective: Attempt to overwrite or update another user's uploaded file.
+        expected: Ownership validation should be enforced.
+
+      - id: idor_023
+        priority: high
+        title: Test GraphQL object references
+        objective: Modify IDs within GraphQL queries and mutations.
+        expected: Authorization should be enforced for every resolver.
+
+      - id: idor_024
+        priority: medium
+        title: Test nested resource endpoints
+        objective: Access resources nested beneath another user's object.
+        expected: Parent-child authorization relationships should be validated.
+
+  - name: Edge Cases
+
+    tests:
+
+      - id: idor_025
+        priority: medium
+        title: Test zero and negative identifiers
+        objective: Use zero and negative values.
+        expected: Invalid identifiers should be rejected safely.
+
+      - id: idor_026
+        priority: medium
+        title: Test very large identifiers
+        objective: Use extremely large integer values.
+        expected: Requests should fail safely without exposing data.
+
+      - id: idor_027
+        priority: medium
+        title: Test null and empty values
+        objective: Submit empty or null identifiers.
+        expected: Invalid requests should be rejected.
+
+      - id: idor_028
+        priority: low
+        title: Test identifier type changes
+        objective: Replace numeric identifiers with strings, UUIDs or unexpected data types.
+        expected: Validation should prevent unauthorized access.
+
+      - id: idor_029
+        priority: medium
+        title: Compare authorized and unauthorized responses
+        objective: Observe differences in status codes, response size and error messages.
+        expected: Responses should not leak sensitive information.
+
+      - id: idor_030
+        priority: medium
+        title: Check object ownership after updates
+        objective: Modify an object and verify whether ownership changes unexpectedly.
+        expected: Ownership should remain intact.
+
+      - id: idor_031
+        priority: medium
+        title: Review pagination results
+        objective: Inspect paginated endpoints for objects belonging to other users.
+        expected: Pagination should only include authorized resources.
+
+      - id: idor_032
+        priority: medium
+        title: Test filtered search endpoints
+        objective: Manipulate filter parameters to retrieve another user's objects.
+        expected: Search results should respect authorization.
+
+      - id: idor_033
+        priority: low
+        title: Review exported data
+        objective: Test export or report generation endpoints for unauthorized data inclusion.
+        expected: Exports should contain only authorized resources.
+
+      - id: idor_034
+        priority: low
+        title: Test archived or soft-deleted objects
+        objective: Attempt to access archived resources by modifying identifiers.
+        expected: Archived resources should remain protected.
+
+      - id: idor_035
+        priority: medium
+        title: Verify object creation ownership
+        objective: Attempt to assign ownership of newly created objects to another user by modifying owner-related fields.
+        expected: The server should ignore client-controlled ownership fields and assign ownership based on the authenticated user.

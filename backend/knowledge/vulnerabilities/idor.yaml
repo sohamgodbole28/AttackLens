@@ -1,0 +1,88 @@
+id: idor
+
+name: Insecure Direct Object Reference
+
+description: >
+  Insecure Direct Object Reference (IDOR) is an access control
+  vulnerability that occurs when an application exposes references
+  to internal objects without properly verifying whether the
+  authenticated user is authorized to access them.
+
+version: 1.0
+
+category: access_control
+
+severity: high
+
+confidence: high
+
+owasp:
+
+  top10:
+    - A01:2021 Broken Access Control
+
+  wstg:
+    - WSTG-ATHZ-04
+
+cwe:
+
+  - CWE-639
+
+cvss:
+
+  base_score: 8.6
+
+tags:
+
+  - access_control
+  - authorization
+  - idor
+  - object_reference
+  - api
+  - business_logic
+
+affected_assets:
+
+  - REST API
+
+  - GraphQL API
+
+  - User Profiles
+
+  - Orders
+
+  - Invoices
+
+  - Documents
+
+  - File Downloads
+
+  - Account Resources
+
+impact:
+
+  - Unauthorized data disclosure
+
+  - Unauthorized data modification
+
+  - Unauthorized object deletion
+
+  - Privilege escalation
+
+  - Horizontal privilege escalation
+
+  - Vertical privilege escalation
+
+prerequisites:
+
+  - User-controlled object identifier
+
+  - Missing or weak authorization checks
+
+notes:
+
+  - IDOR is a subset of Broken Access Control.
+
+  - Authentication alone does not prevent IDOR.
+
+  - Every object access should be validated against the requesting user's authorization.

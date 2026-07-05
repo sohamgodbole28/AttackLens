@@ -1,0 +1,57 @@
+vulnerability: broken_access_control
+
+version: 1.0
+
+resources:
+
+  learning:
+
+    - source: PortSwigger Web Security Academy
+      title: Access Control Vulnerabilities
+      type: lab
+
+    - source: OWASP Web Security Testing Guide
+      title: Testing for Authorization (WSTG-ATHZ)
+      type: testing_guide
+
+  standards:
+
+    - source: OWASP Top 10
+      title: A01:2021 - Broken Access Control
+      type: standard
+
+    - source: OWASP ASVS
+      title: V4 - Access Control Verification Requirements
+      type: verification_standard
+
+    - source: CWE
+      title: CWE-284 - Improper Access Control
+      type: weakness
+
+  books:
+
+    - source: The Web Application Hacker's Handbook
+      title: Access Control Vulnerabilities
+      authors:
+        - Dafydd Stuttard
+        - Marcus Pinto
+
+    - source: Real-World Bug Hunting
+      title: Access Control & Authorization Vulnerabilities
+      authors:
+        - Peter Yaworski
+
+  methodology:
+
+    - source: OWASP ASVS
+      title: V4 Access Control Requirements
+
+    - source: OWASP Cheat Sheet Series
+      title: Authorization Cheat Sheet
+
+notes:
+
+  - Broken Access Control is the #1 risk in the OWASP Top 10 (2021).
+  - Authorization decisions should always be enforced on the server.
+  - Client-side role checks and hidden UI elements are not security controls.
+  - Every privileged action should perform an authorization check before execution.

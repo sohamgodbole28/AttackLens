@@ -1,0 +1,281 @@
+vulnerability: file_upload
+
+version: 1.0
+
+categories:
+
+  - name: Upload Validation
+
+    tests:
+
+      - id: fu_001
+        priority: critical
+        title: Upload an allowed file type
+        objective: Confirm normal upload functionality before testing bypasses.
+        expected: Valid files should upload successfully.
+
+      - id: fu_002
+        priority: critical
+        title: Upload a forbidden extension
+        objective: Attempt to upload server-executable or unsupported file types.
+        expected: The upload should be rejected.
+
+      - id: fu_003
+        priority: critical
+        title: Test double extensions
+        objective: Upload files such as image.php.jpg or shell.php.png.
+        expected: Extension validation should not be bypassed.
+
+      - id: fu_004
+        priority: high
+        title: Test mixed-case extensions
+        objective: Upload files using extensions such as .PhP or .Jsp.
+        expected: Validation should be case-insensitive.
+
+      - id: fu_005
+        priority: high
+        title: Test uncommon executable extensions
+        objective: Try extensions supported by different server technologies.
+        expected: Executable files should never be accepted.
+
+  - name: MIME Type Validation
+
+    tests:
+
+      - id: fu_006
+        priority: critical
+        title: Modify the MIME type
+        objective: Upload an executable file while declaring an allowed MIME type.
+        expected: The server should validate the file independently of the MIME type.
+
+      - id: fu_007
+        priority: high
+        title: Remove the MIME type
+        objective: Omit the Content-Type header for the uploaded file.
+        expected: Upload validation should remain effective.
+
+      - id: fu_008
+        priority: high
+        title: Test invalid MIME types
+        objective: Supply arbitrary or incorrect MIME types.
+        expected: Invalid MIME types should not bypass validation.
+
+  - name: File Signature Validation
+
+    tests:
+
+      - id: fu_009
+        priority: critical
+        title: Test magic byte validation
+        objective: Modify file signatures while keeping the extension unchanged.
+        expected: Validation should verify actual file content.
+
+      - id: fu_010
+        priority: critical
+        title: Upload polyglot files
+        objective: Upload files that satisfy multiple file formats simultaneously.
+        expected: Dangerous polyglot files should not bypass validation.
+
+  - name: Filename Handling
+
+    tests:
+
+      - id: fu_011
+        priority: high
+        title: Test filename path traversal
+        objective: Include traversal sequences within the filename.
+        expected: Filenames should be sanitized.
+
+      - id: fu_012
+        priority: high
+        title: Test filename overwrite
+        objective: Upload a file using the name of an existing resource.
+        expected: Existing files should not be overwritten without authorization.
+
+      - id: fu_013
+        priority: medium
+        title: Test long filenames
+        objective: Upload files with excessively long filenames.
+        expected: The server should safely handle long filenames.
+
+      - id: fu_014
+        priority: medium
+        title: Test special characters
+        objective: Upload filenames containing spaces, Unicode and special characters.
+        expected: Validation should remain secure.
+
+      - id: fu_015
+        priority: medium
+        title: Test null or empty filenames
+        objective: Submit empty filename values where possible.
+        expected: Invalid filenames should be rejected.
+
+  - name: Dangerous File Types
+
+    tests:
+
+      - id: fu_016
+        priority: critical
+        title: Upload server-side scripts
+        objective: Attempt to upload files that could execute on the server.
+        expected: Executable server-side files must never be accepted.
+
+      - id: fu_017
+        priority: high
+        title: Upload SVG files
+        objective: Test SVG uploads for active content risks.
+        expected: Uploaded SVG content should be handled safely.
+
+      - id: fu_018
+        priority: high
+        title: Upload HTML files
+        objective: Attempt to upload HTML documents containing active content.
+        expected: Uploaded HTML should not create script execution opportunities.
+
+      - id: fu_019
+        priority: high
+        title: Upload archive files
+        objective: Test ZIP, TAR and similar archive uploads.
+        expected: Archives should be validated before processing.
+
+      - id: fu_020
+        priority: medium
+        title: Upload large files
+        objective: Verify upload size limits.
+        expected: Size restrictions should be enforced.
+
+  - name: Storage & Access
+
+    tests:
+
+      - id: fu_021
+        priority: critical
+        title: Verify upload location
+        objective: Determine whether uploaded files are publicly accessible.
+        expected: Sensitive uploads should not be exposed unnecessarily.
+
+      - id: fu_022
+        priority: critical
+        title: Test direct file access
+        objective: Access uploaded files directly using predictable URLs.
+        expected: Access controls should be enforced where appropriate.
+
+      - id: fu_023
+        priority: high
+        title: Check predictable filenames
+        objective: Determine whether filenames are easily guessable.
+        expected: File identifiers should be unpredictable.
+
+      - id: fu_024
+        priority: high
+        title: Verify server-generated filenames
+        objective: Confirm whether uploaded filenames are randomized.
+        expected: The server should generate safe filenames.
+
+      - id: fu_025
+        priority: high
+        title: Verify file permissions
+        objective: Inspect whether uploaded files receive overly permissive access rights.
+        expected: Uploaded files should use least-privilege permissions.
+
+  - name: Processing
+
+    tests:
+
+      - id: fu_026
+        priority: critical
+        title: Test image processing
+        objective: Determine whether uploaded images undergo server-side processing.
+        expected: Processing should safely handle malformed files.
+
+      - id: fu_027
+        priority: high
+        title: Test metadata handling
+        objective: Upload files containing modified metadata.
+        expected: Metadata should not introduce security issues.
+
+      - id: fu_028
+        priority: high
+        title: Test parser robustness
+        objective: Upload malformed but structurally valid files.
+        expected: Parsers should safely reject malformed content.
+
+      - id: fu_029
+        priority: medium
+        title: Test compressed archives
+        objective: Upload nested or compressed archive structures.
+        expected: Archive extraction should safely enforce limits.
+
+  - name: Authorization
+
+    tests:
+
+      - id: fu_030
+        priority: critical
+        title: Upload to another user's resource
+        objective: Attempt to associate uploads with another account or object.
+        expected: Ownership should be enforced.
+
+      - id: fu_031
+        priority: high
+        title: Upload without authentication
+        objective: Attempt unauthenticated uploads where authentication is expected.
+        expected: Unauthorized uploads should be rejected.
+
+      - id: fu_032
+        priority: high
+        title: Upload using lower privileges
+        objective: Verify upload restrictions across user roles.
+        expected: Role-based permissions should be enforced.
+
+  - name: General Robustness
+
+    tests:
+
+      - id: fu_033
+        priority: medium
+        title: Upload duplicate files
+        objective: Upload the same file multiple times.
+        expected: Duplicate handling should be predictable.
+
+      - id: fu_034
+        priority: medium
+        title: Upload corrupted files
+        objective: Submit intentionally corrupted files.
+        expected: Invalid files should be rejected safely.
+
+      - id: fu_035
+        priority: medium
+        title: Upload empty files
+        objective: Test zero-byte uploads.
+        expected: Empty files should be handled securely.
+
+      - id: fu_036
+        priority: medium
+        title: Interrupt uploads
+        objective: Cancel uploads during transfer.
+        expected: Partial uploads should not remain accessible.
+
+      - id: fu_037
+        priority: low
+        title: Test concurrent uploads
+        objective: Upload multiple files simultaneously.
+        expected: Upload handling should remain consistent.
+
+      - id: fu_038
+        priority: low
+        title: Review server responses
+        objective: Compare successful and failed upload responses.
+        expected: Responses should not leak sensitive implementation details.
+
+      - id: fu_039
+        priority: low
+        title: Inspect generated URLs
+        objective: Review upload URLs for predictable patterns.
+        expected: Resource identifiers should not expose sensitive information.
+
+      - id: fu_040
+        priority: medium
+        title: Verify cleanup of failed uploads
+        objective: Confirm temporary or failed uploads are removed.
+        expected: Orphaned files should not remain accessible.

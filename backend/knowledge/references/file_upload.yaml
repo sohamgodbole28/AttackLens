@@ -1,0 +1,68 @@
+vulnerability: file_upload
+
+version: 1.0
+
+resources:
+
+  learning:
+
+    - source: PortSwigger Web Security Academy
+      title: File Upload Vulnerabilities
+      type: lab
+
+    - source: OWASP Web Security Testing Guide
+      title: Test Upload of Malicious Files
+      type: testing_guide
+
+    - source: OWASP File Upload Cheat Sheet
+      title: File Upload Security Best Practices
+      type: cheat_sheet
+
+  standards:
+
+    - source: CWE
+      title: CWE-434 - Unrestricted Upload of File with Dangerous Type
+      type: weakness
+
+    - source: OWASP Top 10
+      title: A01:2021 Broken Access Control
+      type: standard
+
+    - source: OWASP Top 10
+      title: A05:2021 Security Misconfiguration
+      type: standard
+
+  books:
+
+    - source: The Web Application Hacker's Handbook
+      title: File Upload Vulnerabilities
+      authors:
+        - Dafydd Stuttard
+        - Marcus Pinto
+
+    - source: Real-World Bug Hunting
+      title: File Upload Vulnerabilities
+      authors:
+        - Peter Yaworski
+
+  methodology:
+
+    - source: OWASP File Upload Cheat Sheet
+      title: Secure File Upload Recommendations
+
+    - source: OWASP Web Security Testing Guide
+      title: Test Upload of Malicious Files
+
+notes:
+
+  - Never trust client-supplied file extensions, MIME types or filenames.
+
+  - Validate uploaded files using multiple layers of verification including extension, MIME type and file signature.
+
+  - Store uploaded files outside the web root whenever possible.
+
+  - Generate server-side filenames instead of using user-supplied filenames.
+
+  - Apply authorization checks to every upload and download operation.
+
+  - Consider antivirus scanning and Content Disarm & Reconstruction (CDR) for high-risk file types.

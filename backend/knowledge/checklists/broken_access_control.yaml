@@ -1,0 +1,191 @@
+vulnerability: broken_access_control
+
+version: 1.0
+
+categories:
+
+  - name: Function Level Authorization
+
+    tests:
+
+      - id: bac_001
+        priority: critical
+        title: Access privileged endpoints directly
+        objective: Request administrative or privileged endpoints without sufficient privileges.
+        expected: Access should be denied.
+
+      - id: bac_002
+        priority: critical
+        title: Invoke hidden API endpoints
+        objective: Access endpoints discovered through JavaScript files, API documentation or traffic analysis.
+        expected: Hidden endpoints should enforce authorization.
+
+      - id: bac_003
+        priority: critical
+        title: Execute administrative functions
+        objective: Attempt administrator-only actions using a standard user account.
+        expected: Administrative actions must be rejected.
+
+      - id: bac_004
+        priority: high
+        title: Test undocumented endpoints
+        objective: Access undocumented routes that may expose privileged functionality.
+        expected: Authorization must still be enforced.
+
+  - name: Role & Permission Validation
+
+    tests:
+
+      - id: bac_005
+        priority: critical
+        title: Modify role parameters
+        objective: Change role or privilege-related parameters in the request.
+        expected: Client-controlled roles should be ignored.
+
+      - id: bac_006
+        priority: critical
+        title: Modify permission values
+        objective: Alter permission identifiers or permission arrays.
+        expected: Server-side authorization should prevent privilege escalation.
+
+      - id: bac_007
+        priority: high
+        title: Modify access level fields
+        objective: Change access_level or similar authorization fields.
+        expected: The server should reject unauthorized privilege changes.
+
+      - id: bac_008
+        priority: high
+        title: Attempt self-promotion
+        objective: Try assigning administrative privileges to the current account.
+        expected: Privilege escalation should not be possible.
+
+      - id: bac_009
+        priority: high
+        title: Assign privileged roles to other users
+        objective: Attempt to grant elevated roles through administrative APIs.
+        expected: Only authorized administrators should perform role assignments.
+
+  - name: Workflow Authorization
+
+    tests:
+
+      - id: bac_010
+        priority: critical
+        title: Skip approval workflow
+        objective: Invoke final workflow steps directly without completing previous stages.
+        expected: Workflow validation should prevent bypass.
+
+      - id: bac_011
+        priority: high
+        title: Repeat completed administrative actions
+        objective: Replay privileged requests after completion.
+        expected: Authorization and business rules should still be enforced.
+
+      - id: bac_012
+        priority: high
+        title: Invoke restricted workflow states
+        objective: Transition objects into unauthorized states.
+        expected: Invalid state transitions should be rejected.
+
+      - id: bac_013
+        priority: medium
+        title: Execute actions out of sequence
+        objective: Call later workflow endpoints before prerequisite steps.
+        expected: Server-side workflow validation should prevent execution.
+
+  - name: HTTP Request Manipulation
+
+    tests:
+
+      - id: bac_014
+        priority: high
+        title: Change the HTTP method
+        objective: Replay requests using alternative HTTP methods.
+        expected: Authorization must be enforced consistently.
+
+      - id: bac_015
+        priority: high
+        title: Replay intercepted requests
+        objective: Replay privileged requests from another session.
+        expected: Authorization should be re-evaluated.
+
+      - id: bac_016
+        priority: medium
+        title: Remove authorization-related parameters
+        objective: Omit client-side authorization hints.
+        expected: Access decisions should rely only on server-side authorization.
+
+      - id: bac_017
+        priority: medium
+        title: Duplicate authorization parameters
+        objective: Supply multiple authorization-related parameters.
+        expected: Parameter pollution should not bypass authorization.
+
+  - name: Administrative Features
+
+    tests:
+
+      - id: bac_018
+        priority: critical
+        title: Access administrative dashboards
+        objective: Request administrator dashboards using non-administrative accounts.
+        expected: Access must be denied.
+
+      - id: bac_019
+        priority: critical
+        title: Manage other users
+        objective: Attempt to create, delete, suspend or modify other users.
+        expected: Administrative authorization should be required.
+
+      - id: bac_020
+        priority: high
+        title: Modify application configuration
+        objective: Access endpoints that update system settings.
+        expected: Configuration changes must require elevated privileges.
+
+      - id: bac_021
+        priority: high
+        title: Access audit logs
+        objective: Retrieve logs or security events.
+        expected: Sensitive operational data should remain protected.
+
+      - id: bac_022
+        priority: medium
+        title: Access backup or export functionality
+        objective: Attempt to generate or download system exports.
+        expected: Export operations should require appropriate authorization.
+
+  - name: Business Logic Authorization
+
+    tests:
+
+      - id: bac_023
+        priority: critical
+        title: Perform unauthorized financial actions
+        objective: Attempt privileged financial operations such as refunds, credits or balance modifications.
+        expected: Business-critical actions should require appropriate authorization.
+
+      - id: bac_024
+        priority: high
+        title: Execute privileged business operations
+        objective: Invoke actions reserved for managers or administrators.
+        expected: Unauthorized users must be prevented from performing privileged operations.
+
+      - id: bac_025
+        priority: high
+        title: Access restricted reports
+        objective: Retrieve reports intended for privileged users.
+        expected: Report access should be restricted.
+
+      - id: bac_026
+        priority: medium
+        title: Test feature flag enforcement
+        objective: Access functionality disabled for the current role.
+        expected: Feature availability should be enforced server-side.
+
+      - id: bac_027
+        priority: medium
+        title: Verify authorization after role changes
+        objective: Test whether permission changes immediately affect access.
+        expected: Authorization should reflect current privileges without requiring unsafe workarounds.

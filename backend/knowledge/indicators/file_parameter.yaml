@@ -1,0 +1,71 @@
+id: file_parameter
+
+name: File Parameter
+
+description: >
+  Detects request parameters or multipart form fields that are
+  commonly used for uploading or attaching files.
+
+version: 1.0
+
+category: request
+
+confidence: high
+
+priority: 95
+
+detection:
+
+  parameters:
+
+    - file
+    - upload
+    - attachment
+    - document
+    - image
+    - avatar
+    - photo
+    - picture
+    - profile_picture
+    - profile_image
+    - resume
+    - cv
+    - certificate
+    - report
+    - invoice
+    - logo
+    - banner
+    - icon
+    - media
+    - thumbnail
+
+  multipart_field_names:
+
+    - file
+    - upload
+    - attachment
+    - document
+    - image
+    - avatar
+    - photo
+    - picture
+    - profile_picture
+    - profile_image
+    - resume
+    - cv
+
+examples:
+
+  body:
+
+    - 'Content-Disposition: form-data; name="file"; filename="image.png"'
+
+    - 'Content-Disposition: form-data; name="avatar"; filename="profile.jpg"'
+
+    - 'Content-Disposition: form-data; name="resume"; filename="resume.pdf"'
+
+notes:
+
+  - Detection does not imply an insecure file upload.
+  - File parameters should be validated using server-side controls.
+  - File upload endpoints commonly require additional security testing.
