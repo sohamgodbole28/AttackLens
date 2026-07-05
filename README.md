@@ -1,6 +1,6 @@
 <div align="center">
 
-![AttackLens Banner](./frontend/src/assets/hero.png)
+![AttackLens Banner](./banner.png)
 
 # AttackLens
 
